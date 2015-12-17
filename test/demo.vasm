@@ -95,8 +95,3 @@ end_proc
 proc check_key_size
 cmpd r1 max_bytes
 end_proc
-
-
-
-
-
