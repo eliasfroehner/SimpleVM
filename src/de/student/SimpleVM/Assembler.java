@@ -277,16 +277,27 @@ public class Assembler {
         List<Integer> byteCode = new ArrayList<>();
         String[] bytes = string.split(",");
         int usedSpace = this.getUsedSpace();
-
+        int value = 0;
+        
         for (int i = 0; i < bytes.length; i++) {
             byteCode.add(WRITE_MEM_BYTE_DWORD);
             byteCode.add(usedSpace + i);
+           
             if (isInteger(bytes[i])) {
-                byteCode.add(Integer.parseInt(bytes[i]));
+            	value = Integer.parseInt(bytes[i]);                
             } else if (isHexInteger(bytes[i])) {
-                byteCode.add(parseHexInteger(bytes[i]));
+            	value = parseHexInteger(bytes[i]);
             } else {
                 printWarning("Invalid byte in sequence", bytes[i]);
+                byteCode.clear();
+                break;
+            }
+            
+            if (value <= Byte.MAX_VALUE) {
+            	byteCode.add(value);
+            }
+            else {
+            	printWarning("Value is greater than 255 for byte array", bytes[i]);
                 byteCode.clear();
                 break;
             }
