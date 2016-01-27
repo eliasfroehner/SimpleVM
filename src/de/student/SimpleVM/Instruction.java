@@ -24,6 +24,8 @@ public class Instruction {
     final static int AND_DWORD = 5;             // ANDD REG, VAL
     final static int OR_DWORD = 6;              // ORD REG, VAL
     final static int CMP_DWORD = 7;             // CMPD REG, VAL
+    final static int SHL_DWORD = 51;            // SHLD REG, VAL
+    final static int SHR_DWORD = 52;            // SHRD REG, VAL
 
     // REGISTER
     final static int MOV_REG = 8;               // MOVR REG, REG2
@@ -38,6 +40,8 @@ public class Instruction {
     final static int CMP_REG = 15;              // CMPR REG, REG2
     final static int INC_REG = 16;              // INCR REG
     final static int DEC_REG = 17;              // DECR REG
+    final static int SHL_REG = 53;              // SHLR REG, REG2
+    final static int SHR_REG = 54;              // SHRR REG, REG2
 
     // JUMPS
     final static int LABEL = 18;                // LABEL:
@@ -88,6 +92,8 @@ public class Instruction {
         instructionOffsets.put(AND_DWORD, TWO_PARAMETER);
         instructionOffsets.put(OR_DWORD, TWO_PARAMETER);
         instructionOffsets.put(CMP_DWORD, TWO_PARAMETER);
+        instructionOffsets.put(SHL_DWORD, TWO_PARAMETER);
+        instructionOffsets.put(SHR_DWORD, TWO_PARAMETER);
 
 
         // REGISTER
@@ -98,6 +104,8 @@ public class Instruction {
         instructionOffsets.put(DIV_REG, TWO_PARAMETER);
         instructionOffsets.put(XOR_REG, TWO_PARAMETER);
         instructionOffsets.put(AND_REG, TWO_PARAMETER);
+        instructionOffsets.put(SHL_REG, TWO_PARAMETER);
+        instructionOffsets.put(SHR_REG, TWO_PARAMETER);
         instructionOffsets.put(CMP_REG, TWO_PARAMETER);
         instructionOffsets.put(NOT_REG, ONE_PARAMETER);
         instructionOffsets.put(INC_REG, ONE_PARAMETER);
@@ -144,6 +152,8 @@ public class Instruction {
         instructionMnemonics.put("andd", AND_DWORD);
         instructionMnemonics.put("ord", OR_DWORD);
         instructionMnemonics.put("cmpd", CMP_DWORD);
+        instructionMnemonics.put("shld", SHL_DWORD);
+        instructionMnemonics.put("shrd", SHR_DWORD);
 
         // REGISTER
         instructionMnemonics.put("movr", MOV_REG);
@@ -157,6 +167,8 @@ public class Instruction {
         instructionMnemonics.put("notr", NOT_REG);
         instructionMnemonics.put("incr", INC_REG);
         instructionMnemonics.put("decr", DEC_REG);
+        instructionMnemonics.put("shlr", SHL_REG);
+        instructionMnemonics.put("shrr", SHR_REG);
 
         // JUMPS
         // Label aliases

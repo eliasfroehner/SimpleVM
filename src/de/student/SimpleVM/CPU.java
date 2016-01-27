@@ -317,6 +317,12 @@ public class CPU {
             case AND_DWORD:
                 this.andDword(nextInstruction(assembly), nextInstruction(assembly));
                 break;
+            case SHL_DWORD:
+                this.shlDword(nextInstruction(assembly), nextInstruction(assembly));
+                break;
+            case SHR_DWORD:
+                this.shrDword(nextInstruction(assembly), nextInstruction(assembly));
+                break;
             case CMP_DWORD:
                 this.cmpDword(nextInstruction(assembly), nextInstruction(assembly));
                 break;
@@ -343,6 +349,12 @@ public class CPU {
                 break;
             case AND_REG:
                 this.andReg(nextInstruction(assembly), nextInstruction(assembly));
+                break;
+            case SHL_REG:
+                this.shlReg(nextInstruction(assembly), nextInstruction(assembly));
+                break;
+            case SHR_REG:
+                this.shrReg(nextInstruction(assembly), nextInstruction(assembly));
                 break;
             case CMP_REG:
                 this.cmpReg(nextInstruction(assembly), nextInstruction(assembly));
@@ -548,6 +560,40 @@ public class CPU {
         }
     }
 
+    /**
+     * Shifts value of register by count of value left.
+     * SHLD REGISTER, VALUE
+     *
+     * @param register
+     * @param value
+     */
+    private void shlDword(int register, int value) {
+        this.setFlags(false, Flag.EQUAL, Flag.GREATER, Flag.LOWER);
+
+        if (this.registerInBounds(register)) {
+            int registerValue = this.getRegister(register);
+
+            this.setRegister(register, registerValue << value);
+        }
+    }
+
+    /**
+     * Shifts value of register by count of value right.
+     * SHRD REGISTER, VALUE
+     *
+     * @param register
+     * @param value
+     */
+    private void shrDword(int register, int value) {
+        this.setFlags(false, Flag.EQUAL, Flag.GREATER, Flag.LOWER);
+
+        if (this.registerInBounds(register)) {
+            int registerValue = this.getRegister(register);
+
+            this.setRegister(register, registerValue >> value);
+        }
+    }
+
     // Register
 
     /**
@@ -733,6 +779,43 @@ public class CPU {
             this.generalCompareHandler(registerValue, register2Value);
         }
     }
+
+    /**
+     * Shifts value of register left, by count of other register.
+     * SHLR REGISTER, REGISTER2
+     *
+     * @param register
+     * @param register2
+     */
+    private void shlReg(int register, int register2) {
+        this.setFlags(false, Flag.EQUAL, Flag.GREATER, Flag.LOWER);
+
+        if (this.registerInBounds(register, register2)) {
+            int registerValue = this.getRegister(register);
+            int register2Value = this.getRegister(register2);
+
+            this.setRegister(register, (registerValue << register2Value));
+        }
+    }
+
+    /**
+     * Shifts value of register right, by count of other register.
+     * SHLR REGISTER, REGISTER2
+     *
+     * @param register
+     * @param register2
+     */
+    private void shrReg(int register, int register2) {
+        this.setFlags(false, Flag.EQUAL, Flag.GREATER, Flag.LOWER);
+
+        if (this.registerInBounds(register, register2)) {
+            int registerValue = this.getRegister(register);
+            int register2Value = this.getRegister(register2);
+
+            this.setRegister(register, (registerValue >> register2Value));
+        }
+    }
+
 
     /**
      * Checks for GREATER, EQUAL, LOWER.
